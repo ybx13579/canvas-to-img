@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+}
+</style>
+<body>
+
+	<canvas id="myCanvas" width="630" height="1000" style="background: #000;"></canvas>
+	<button id="dd">生成图片</button>
+<script type="text/javascript" charset="utf-8">
+	window.onload = function(){
+		var txt = "患者基本感知功能正常，但对自己身体部位的存在、空间位置和各部分之间的关系认识障碍。表现有自体部位失认、偏侧肢体忽视、痛觉缺失和幻肢症等。多见于非优势半球顶叶病变。";
+		//bg
+		var canvas = document.getElementById('myCanvas');
+		var fd = canvas.getContext('2d');
+
+//		var img = new Image();
+//        img.src="tx-bg750.jpg";
+//        img.onload = function(){
+//            fd.drawImage(img,0,0);
+//        }
+
+        //雷达图 300*215  600*430
+        var leida = new Image();
+        leida.src="1.png";
+        leida.onload = function(){
+            fd.drawImage(leida,0,180);
+        }
+
+        //程度名称
+        fd.fillStyle = '#ffffff';
+        fd.font = "400 36px Arial";
+        fd.globalCompositeOperation = 'destination-over';
+        fd.fillText('体象障碍程度', 208, 68);
+
+
+		//程度结果
+        fd.fillStyle = '#ffffff';
+        fd.font = "400 52px Arial";
+        fd.globalCompositeOperation = 'destination-over';
+        fd.fillText('中度', 260, 150);
+
+        //扫码测试
+        fd.fillStyle = '#ffffff';
+        fd.font = "200 32px Arial";
+        fd.globalCompositeOperation = 'destination-over';
+        fd.fillText('扫码测试', 320, 950);
+        //qr
+
+        var qr = new Image();
+        qr.src="qr.jpg";
+        qr.onload = function(){
+            fd.drawImage(qr,460,860);
+        }
+
+
+		//程度解说//换行
+        function drawText(t,x,y,w){
+
+            var chr = t.split("");
+            var temp = "";
+            var row = [];
+
+            fd.font = "100 20px Arial";
+            fd.fillStyle = "#f4f4f4";
+            fd.textBaseline = "middle";
+
+            for(var a = 0; a < chr.length; a++){
+                if( fd.measureText(temp).width < w ){
+                    ;
+                }
+                else{
+                    row.push(temp);
+                    temp = "";
+                }
+                temp += chr[a];
+            }
+
+            row.push(temp);
+
+            for(var b = 0; b < row.length; b++){
+                fd.fillText(row[b],x,y+(b+1)*30);
+            }
+        }
+        drawText(txt,40,630,540);
+
+
+
+// 		  生成图片
+//        var btn = document.getElementById('dd');
+//        btn.onclick = function () {
+//            var image = new Image();
+//            // canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持
+//            // 指定格式 PNG
+//            image.src = canvas.toDataURL("image/png");
+//        }
+
+    }
+</script>
+</body>
+</html>
